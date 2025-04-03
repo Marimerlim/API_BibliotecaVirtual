@@ -1,5 +1,8 @@
-from flask import Flask,request,jsonify
+
+from flask_cors import CORS
+from flask import Flask, request, jsonify
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def home():
@@ -49,16 +52,16 @@ def listar_livros():
         livros = conn.execute("SELECT * FROM LIVROS").fetchall()
         livros_formatados = []
         for item in livros:
-            dicionario = {
+            dicionario_livros = {
                 "id": item[0],
                 "titulo": item[1],
                 "categoria": item[2],
                 "autor": item[3],
                 "image_url": item[4]
             }
-        livros_formatados.append(dicionario)
+            livros_formatados.append(dicionario_livros)
     
-    return jsonify(livros_formatados)
+        return jsonify(livros_formatados), 200
 
 
 
